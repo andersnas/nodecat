@@ -1,0 +1,20 @@
+{
+  "name": "nodecat",
+  "version": "1.0.0",
+  "description": "A port of Akamais CAT implementation (https://github.com/akamai/edgeworkers-examples/tree/master/delivery/media/cat) into NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andersnas/nodecat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andersnas/nodecat/issues"
+  },
+  "homepage": "https://github.com/andersnas/nodecat#readme"
+}

@@ -6,31 +6,27 @@ A port of Akamais CAT implementation (https://github.com/akamai/edgeworkers-exam
 
 Provides a backend with endpoint to create and verify common access tokens.
 
-## Install
+## Pre requisites
 
 ```
-npm install
+npm init -y
+npm install jsonwebtoken cbor
 ```
 
-## Run
-```
-npm start
-```
 
 ## Docker
 
 ```
-docker build -t nodecat-svc:dev .
-docker run --rm -d \
-  -p 8000:8000 nodecat-svc:dev
+docker build -t node-helloworld .
+docker run -p 3000:3000 node-helloworld
 ```
 
 ## Usage
 
-Get Captcha:
+Start app:
 
 ```
-% curl http://localhost:8000/gettoken
+% curl http://localhost:3000/gettoken
 {"token":"1234567890"}
 ```
 
@@ -49,7 +45,7 @@ Correct token:
 < Keep-Alive: timeout=72
 < 
 * Connection #0 to host localhost left intact
-{"message":"Captcha is correct"}
+{"message":"Token is correct"}
 ```
 
 

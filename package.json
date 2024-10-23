@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A port of Akamais CAT implementation (https://github.com/akamai/edgeworkers-examples/tree/master/delivery/media/cat) into NodeJS",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/andersnas/nodecat/issues"
   },
-  "homepage": "https://github.com/andersnas/nodecat#readme"
+  "homepage": "https://github.com/andersnas/nodecat#readme",
+  "dependencies": {
+    "base64url": "^3.0.1",
+    "cbor": "^9.0.2",
+    "encoding": "^0.1.13",
+    "jose": "^5.9.6"
+  }
 }

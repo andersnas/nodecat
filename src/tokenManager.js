@@ -5,6 +5,7 @@ import base64url from 'base64url';
 import { CWTGenerator, CWTValidator, CWTUtil } from './cwt.js';
 import { CAT, CatURILabelMap, ClaimsLabelMap, HeaderLabelMap, AlgoLabelMap, CatRLabelMap } from './cat.js';
 
+
 // Static HS256 Key for signing tokens (fallback key)
 let hs256KeyHex = '403697de87af64611c1d32a05dab0fe1fcb715a86ab435f1ec99192d79569388';
 

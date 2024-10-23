@@ -5,18 +5,14 @@ import { generateKeyPair, exportJWK, SignJWT } from 'jose';
 const hs256KeyHex = randomBytes(32).toString('hex');
 console.log('HS256 Key:', hs256KeyHex);
 
-// Generate an ES256 key pair
-const { publicKey, privateKey } = await generateKeyPair('ES256');
+// Generate an ES256 key pair (P-256 curve)
+const { publicKey, privateKey } = generateKeyPairSync('ec', {
+    namedCurve: 'P-256',   // Curve name
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
+    publicKeyEncoding: { type: 'spki', format: 'pem' }
+  });
+  
+  console.log('ES256 Private Key (PEM):', privateKey);
+  console.log('ES256 Public Key (PEM):', publicKey);
 
-// Export the private key as JWK
-const jwk = await exportJWK(privateKey);
-console.log('ES256 Private Key (JWK):', jwk);
 
-// Create a JWT
-const jwt = await new SignJWT({ 'user': 'TheCatHunter' })
-  .setProtectedHeader({ alg: 'ES256' })
-  .setIssuedAt()
-  .setExpirationTime('2h')
-  .sign(privateKey);
-
-console.log('Signed JWT:', jwt);

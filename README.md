@@ -28,7 +28,7 @@ docker build -t node-cat .
 docker run -p 3000:3000 node-cat
 ```
 
-### Usage
+## Usage
 
 Generate token (the smallest token you can create)
 ```
@@ -36,6 +36,7 @@ Generate token (the smallest token you can create)
   -H 'Content-Type: application/json' \
   --data-raw '{"exp":1829693926}'                         
 
+# Example output:
 2D3RhEOhAQWhBFBha2FtYWlfa2V5X2hzMjU2U6MEGm0O6eYGGmcZ-KQFGmcZ-KRYIHW-ZKqIAu7x8Z2RISuGYq99maiS2aulzbKLnRiNBgP2
 ```
 

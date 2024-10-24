@@ -10,17 +10,25 @@ Provides a backend with endpoint to create and verify common access tokens.
 - Not all claims are supported.
 - createToken only support HS256 keys 
 
-## Docker
+### Docker
 
 ```
 docker build -t node-cat .
 docker run -p 3000:3000 node-cat
 ```
 
-## Usage
+### Usage
 
-Generate token:
+Generate token (the smallest token you can create)
+```
+% curl 'http://localhost:3000/generateToken' \       
+  -H 'Content-Type: application/json' \
+  --data-raw '{"exp":1829693926}'                         
 
+2D3RhEOhAQWhBFBha2FtYWlfa2V5X2hzMjU2U6MEGm0O6eYGGmcZ-KQFGmcZ-KRYIHW-ZKqIAu7x8Z2RISuGYq99maiS2aulzbKLnRiNBgP2
+```
+
+Generate a somewhat more complex token
 ```
 % curl 'http://localhost:3000/generateToken' \
   -H 'Content-Type: application/json' \
@@ -30,7 +38,6 @@ Generate token:
 ```
 
 Validate Token:
-
 ```
 % curl -X POST http://localhost:3000/validateToken \
 -H "Content-Type: application/json" \
@@ -39,12 +46,21 @@ Validate Token:
 {"status":"Token is valid","payload":{"exp":1829693926,"sub":"TheCatHunter","catr":{"renewal_type":2,"exp_extension":70},"iat":1729714554,"nbf":1729714554}}
 ```
 
-## Generate keys
+### Generate keys
 
 To use the code, please make sure to generate your own keys and insert them into the code.
 
+By using OpenSSL
 ```
-node src/tokenManager.js
+openssl rand -hex 32
+
+feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20
+```
+
+By using the supplied Node.js script
+```
+npm install jose
+node src/createKeys.js
 
 HS256 Key: feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20
 
@@ -62,3 +78,7 @@ HT/lygxaM0B6SaKPvWiLFs448q/6eczz+lQScK8+p86peSAfFUiE5x2sgA==
 -----END PUBLIC KEY-----
 ```
 
+To have the tokenManager picking up the key, you can supply it as a environment variable
+```
+export HS256_KEY=feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20
+```

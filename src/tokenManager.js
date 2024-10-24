@@ -5,11 +5,7 @@ import base64url from 'base64url';
 import { CWTGenerator, CWTValidator, CWTUtil } from './cwt.js';
 import { CAT, CatURILabelMap, ClaimsLabelMap, HeaderLabelMap, AlgoLabelMap, CatRLabelMap } from './cat.js';
 
-
-// Static HS256 Key for signing tokens (fallback key)
-let hs256KeyHex = '403697de87af64611c1d32a05dab0fe1fcb715a86ab435f1ec99192d79569388';
-
-// ES256 Private Key for signing
+// ES256 Private Key for signing - This is not used in the createToken function
 const es256PrivJwk = {
   key_ops: ['sign'],
   ext: false,
@@ -42,10 +38,7 @@ const cwtValidator = new CWTValidator({
   ignoreNotBefore: false
 });
 
-// Generate a new HS256 Key
-const generateKey = () => crypto.randomBytes(32).toString('hex');
 
-// Function to generate a CAT token
 // Generate a basic CAT token based on incoming JSON claims
 async function generateToken(body) {
     // Process the 'catu' claim
@@ -223,10 +216,6 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(400, { 'Content-Type': 'text/plain' });
       res.end(err.message);
     }
-  } else if (req.url === '/generateKey' && req.method === 'GET') {
-    hs256KeyHex = generateKey();  // Dynamically update the HS256 key
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end(hs256KeyHex);
   } else if (req.url === '/validateToken' && req.method === 'POST') {
     try {
       let body = '';
@@ -252,6 +241,14 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
+
+// Default key in case the environment variable is not set or is empty
+const DEFAULT_HS256_KEY = '403697de87af64611c1d32a05dab0fe1fcb715a86ab435f1ec99192d79569388';
+
+// Fetch the HS256 key from the environment variable or use the default key
+const hs256KeyHex = process.env.HS256_KEY || DEFAULT_HS256_KEY;
+
+// Set PORT based on evironment variable or default to 3000
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 server.listen(PORT, () => {

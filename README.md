@@ -28,9 +28,17 @@ docker build -t node-cat .
 docker run -p 3000:3000 node-cat
 ```
 
+You can also supply HS256 key for signing and PORT for the service to listen on using environment variables:
+
+```
+export HS256_KEY=feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20
+export PORT=3000
+```
+
 ## Usage
 
-Generate token (the smallest token you can create)
+### Generate token (Basic Example)
+The simplest example to generate a token with an expiration claim (``exp``):
 ```
 % curl 'http://localhost:3000/generateToken' \       
   -H 'Content-Type: application/json' \
@@ -40,40 +48,48 @@ Generate token (the smallest token you can create)
 2D3RhEOhAQWhBFBha2FtYWlfa2V5X2hzMjU2U6MEGm0O6eYGGmcZ-KQFGmcZ-KRYIHW-ZKqIAu7x8Z2RISuGYq99maiS2aulzbKLnRiNBgP2
 ```
 
-Generate a somewhat more complex token
+### Generate token (Complex Example)
+A more complex example, generating a token with a renewable claim (``catr``):
 ```
 % curl 'http://localhost:3000/generateToken' \
   -H 'Content-Type: application/json' \
   --data-raw '{"exp":1829693926,"sub":"TheCatHunter","catr":{"expext":70,"renewabletype":2,"deadline":0}}'
 
+# Example output:
   2D3RhEOhAQWhBFBha2FtYWlfa2V5X2hzMjU2WCqlBBptDunmAmxUaGVDYXRIdW50ZXIZARaiAAIBGEYGGmcZWXoFGmcZWXpYIDWdOGh_yV1OZx6eGrJ7RyjcXZM4FhDS9DGXyHMl_toU
 ```
 
-Validate Token:
+### Validate Token:
+To validate a token and retrieve its payload:
 ```
 % curl -X POST http://localhost:3000/validateToken \
 -H "Content-Type: application/json" \
 -d '{"token": "2D3RhEOhAQWhBFBha2FtYWlfa2V5X2hzMjU2WCqlBBptDunmAmxUaGVDYXRIdW50ZXIZARaiAAIBGEYGGmcZWXoFGmcZWXpYIDWdOGh_yV1OZx6eGrJ7RyjcXZM4FhDS9DGXyHMl_toU"}'
 
+# Example output:
 {"status":"Token is valid","payload":{"exp":1829693926,"sub":"TheCatHunter","catr":{"renewal_type":2,"exp_extension":70},"iat":1729714554,"nbf":1729714554}}
 ```
 
-### Generate keys
+## Key Generation
 
-To use the code, please make sure to generate your own keys and insert them into the code.
+To use the NodeCat service with proper security, you need to generate cryptographic keys for signing tokens.
 
-By using OpenSSL
+### Generate HS256 Key (Using OpenSSL)
+To generate a 256-bit HS256 key, run the following command:
 ```
 openssl rand -hex 32
 
+# Example output:
 feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20
 ```
 
-By using the supplied Node.js script
+### Generate Keys Using Node.js
+Alternatively, use the provided Node.js script to generate keys:
 ```
 npm install jose
 node src/createKeys.js
 
+# Example output:
 HS256 Key: feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20
 
 ES256 Private Key (PEM): 
@@ -90,7 +106,7 @@ HT/lygxaM0B6SaKPvWiLFs448q/6eczz+lQScK8+p86peSAfFUiE5x2sgA==
 -----END PUBLIC KEY-----
 ```
 
-To have the tokenManager picking up the key, you can supply it as a environment variable
-```
-export HS256_KEY=feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20
-```
+## Notes
+- **HS256 (HMAC)** is a symmetric algorithm, meaning the same key is used for both signing and validation.
+- **ES256 (ECDSA)** is an asymmetric algorithm, using a private key for signing and a public key for validation.
+Ensure you are managing your cryptographic keys securely, particularly in production environments.

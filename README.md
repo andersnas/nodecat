@@ -28,11 +28,19 @@ docker build -t node-cat .
 docker run -p 3000:3000 node-cat
 ```
 
-You can also supply HS256 key for signing and PORT for the service to listen on using environment variables:
+You can supply HS256 key for signing and PORT for the service to listen on using environment variables:
 
 ```
 export HS256_KEY=feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20
 export PORT=3000
+```
+
+To use environment variables in Docker:
+```bash
+docker run -p 3000:3000 \
+  -e PORT=3000 \
+  -e HS256_KEY=feb0fd6be2dd86279a38f415dd85dbab56c97e3ff589ec7bb04e09c3fd98cb20 \
+  node-cat
 ```
 
 ## Usage
@@ -104,6 +112,19 @@ ES256 Public Key (PEM):
 MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEm5lSfyzFvgR5FqF+P2XS8SAMA329
 HT/lygxaM0B6SaKPvWiLFs448q/6eczz+lQScK8+p86peSAfFUiE5x2sgA==
 -----END PUBLIC KEY-----
+```
+
+## Testing
+You can test the creation and validation of a token in one go using the supplied shell script testToken.sh
+```
+src/testToken.sh
+
+# Example output:
+Creating token...
+Token generated: 2D3RhEOhAQWhBFBha2FtYWlfa2V5X2hzMjU2WCqlBBptDunmAmxUaGVDYXRIdW50ZXIZARaiAAIBGEYGGmcaCUgFGmcaCUhYINXqkeJ6TjMsk2gxt6MdBBb1lGnlo7HhWPfa_5wSW-WZ
+Validating token...
+Token is valid: {"status":"Token is valid","payload":{"exp":1829693926,"sub":"TheCatHunter","catr":{"renewal_type":2,"exp_extension":70},"iat":1729759560,"nbf":1729759560}}
+Test completed successfully.
 ```
 
 ## Notes

@@ -1,3 +1,14 @@
+/*
+Git repo: https://github.com/andersnas/nodecat
+This code is a Node.js server that generates and validates CAT tokens. 
+The server listens for POST requests to the `/generateToken` and `/validateToken` endpoints. 
+The `generateToken` function processes incoming JSON claims, creates a CAT token, and returns it as a base64url-encoded string. 
+The `validateToken` function decodes and validates a CAT token, returning the payload if the token is valid.
+
+This code is ported from the Akamai EdgeWorkers Token Manager example, which is licensed under the Apache License 2.0.
+https://github.com/akamai/edgeworkers-examples/tree/master/delivery/media/cat
+*/
+
 import http from 'http';
 import { TextEncoder, TextDecoder } from 'util';
 import crypto from 'crypto';

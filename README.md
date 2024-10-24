@@ -1,18 +1,29 @@
 # NodeCat
-A port of Akamais Edgeworker CAT implementation (https://github.com/akamai/edgeworkers-examples/tree/master/delivery/media/cat) to NodeJS.
 
+NodeCat is a Node.js port of Akamai's Edgeworker CAT (Common Access Token) implementation. It provides backend endpoints to **create** and **validate** Common Access Tokens (CAT) using industry-standard cryptographic algorithms such as **HS256** and **ES256**.
+
+## Key Features
+- **Token Generation**: Supports creating Common Access Tokens with custom claims such as expiration, subject, and renewable properties.
+- **Token Validation**: Supports validating generated tokens to ensure their authenticity and validity.
+- **Multiple Algorithms**: Supports both symmetric (**HS256**) and asymmetric (**ES256**) cryptographic signing algorithms.
+  
+This implementation is based on [Akamai’s Edgeworker CAT example](https://github.com/akamai/edgeworkers-examples/tree/master/delivery/media/cat), adapted for local Node.js environments.
 
 ## NodeCat Service
 
-Provides a backend with endpoint to create and verify common access tokens.
+The service exposes two main endpoints:
+- **/generateToken**: Generates a Common Access Token with the provided claims.
+- **/validateToken**: Validates a provided CAT token and returns the decoded payload.
 
 ### Limitations
-- Not all claims are supported.
-- createToken only support HS256 keys 
+- Not all claims from the original Edgeworker implementation are currently supported.
+- The `/generateToken` endpoint defaults to **HS256** for signing tokens unless manually configured for **ES256**.
 
-### Docker
+## Docker
 
-```
+To build and run the NodeCat service using Docker:
+
+```bash
 docker build -t node-cat .
 docker run -p 3000:3000 node-cat
 ```

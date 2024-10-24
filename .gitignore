@@ -1,6 +1,9 @@
 # Lock file
 *lock.json
 
+# Work files
+*copy.js
+
 # Logs
 logs
 *.log

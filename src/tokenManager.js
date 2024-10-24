@@ -241,7 +241,6 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-
 // Default key in case the environment variable is not set or is empty
 const DEFAULT_HS256_KEY = '403697de87af64611c1d32a05dab0fe1fcb715a86ab435f1ec99192d79569388';
 

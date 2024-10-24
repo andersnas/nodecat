@@ -1,4 +1,4 @@
-![Node Cat Logo](images/logo.png)
+<img src="images/logo.png" alt="Node Cat Logo" width="20%" />
 # NodeCat
 
 NodeCat is a Node.js port of Akamai's Edgeworker CAT (Common Access Token) implementation. It provides backend endpoints to **create** and **validate** Common Access Tokens (CAT) using industry-standard cryptographic algorithms such as **HS256** and **ES256**.

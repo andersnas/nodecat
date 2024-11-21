@@ -14,7 +14,7 @@ import { TextEncoder, TextDecoder } from 'util';
 import crypto from 'crypto';
 import base64url from 'base64url';
 import { CWTGenerator, CWTValidator, CWTUtil } from './cwt.js';
-import { CAT, CatURILabelMap, ClaimsLabelMap, HeaderLabelMap, AlgoLabelMap, CatRLabelMap } from './cat.js';
+import { CAT, CatURILabelMap, ClaimsLabelMap, HeaderLabelMap, AlgoLabelMap, CatRLabelMap, MatchTypeLabelMap } from './cat.js';
 
 // ES256 Private Key for signing - This is not used in the createToken function
 const es256PrivJwk = {

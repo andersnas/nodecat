@@ -4,6 +4,8 @@
 
 NodeCat is a Node.js port of Akamai's Edgeworker CAT (Common Access Token) implementation. It provides backend endpoints to **create** and **validate** Common Access Tokens (CAT) using industry-standard cryptographic algorithms such as **HS256** and **ES256**.
 
+NOTE!!! This is based on the pre release of the CAT standard (pre version A that is currently in force. The library will be updated to version B)
+
 ## Key Features
 - **Token Generation**: Supports creating Common Access Tokens with custom claims such as expiration, subject, and renewable properties.
 - **Token Validation**: Supports validating generated tokens to ensure their authenticity and validity.
